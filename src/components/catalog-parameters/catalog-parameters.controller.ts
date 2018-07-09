@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
 import * as angular from 'angular';
+import * as showdown from 'showdown';
 
 export class CatalogParametersController implements angular.IController {
 
@@ -162,6 +163,12 @@ export class CatalogParametersController implements angular.IController {
 
       if (original.key) {
         newObject.key = original.key;
+      }
+
+      // ugly naming should be changed
+      if (original.doc_url) {
+        let docHtml = new showdown.Converter().makeHtml(original.doc_url);
+        newObject.doc_url = docHtml;
       }
 
       if (CatalogParametersController.ALLOWED_FORM_INPUT_TYPES[original.type]) {
